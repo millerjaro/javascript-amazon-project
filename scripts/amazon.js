@@ -80,11 +80,8 @@ document.querySelectorAll('.js-add-to-cart')
     button.addEventListener('click', () =>{
       const productId= (button.dataset.productId);
       addToCart(productId);
-      updateCartQuantity();
-
-   
+      updateCartQuantity(); 
     });
-
   });
 
 

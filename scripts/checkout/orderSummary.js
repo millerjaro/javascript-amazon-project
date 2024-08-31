@@ -10,13 +10,7 @@ import { formatCurrency } from "../utils/money.js";
 import { hello } from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { deliveryOptions, getDeliveryOption } from "../../data/deliveryOptions.js";
-
-
-hello();
-
-const today = dayjs();
-const deliveryDate = today.add(7, 'days');
-console.log(deliveryDate.format('dddd, MMMM D'));
+import { renderPaymentSummary } from "./paymentSummary.js";
 
 export function renderOrderSummary() {
 
@@ -138,12 +132,12 @@ export function renderOrderSummary() {
       link.addEventListener('click', () => {
         const productId = link.dataset.productId;
         removeFromCart(productId);
-
+  
         const container = document.querySelector(
           `.js-cart-item-container-${productId}`
         );
         container.remove();
-
+        renderPaymentSummary();
         updateCartQuantity();
       });
     });
@@ -154,6 +148,8 @@ export function renderOrderSummary() {
         const { productId, deliveryOptionId } = element.dataset;
         updateDeliveryOption(productId, deliveryOptionId);
         renderOrderSummary();
+        renderPaymentSummary();
+
       })
     });
 
@@ -173,13 +169,13 @@ export function renderOrderSummary() {
     .forEach((link) => {
       link.addEventListener('click', () => {
         const productId = link.dataset.productId;
-
         const container = document.querySelector(`.js-cart-item-container-${productId}`
-
         );
         container.classList.add('is-editing-quantity');
-
+        renderPaymentSummary();
+        updateCartQuantity();
       });
+     
     })
 
 
@@ -215,7 +211,7 @@ export function renderOrderSummary() {
 
           alert('Value is not allowed');
         }
-
+      
         updateCartQuantity();
       });
 
@@ -224,6 +220,8 @@ export function renderOrderSummary() {
         if (event.key === 'Enter') {
           link.click();
         }
+       
+        updateCartQuantity();
       });
     });
   }

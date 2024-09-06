@@ -8,9 +8,12 @@ export function renderCheckoutHeader(){
   });
 
 
+  
+
   const checkoutHeaderHTML = 
 
   `
+ 
   <div class="header-content">
     <div class="checkout-header-left-section">
     <a href="amazon.html">
@@ -30,7 +33,7 @@ export function renderCheckoutHeader(){
   </div>
 `
 
-  document.querySelector('.js-checkout-header')
-    .innerHTML =  checkoutHeaderHTML;
+document.querySelector('.js-checkout-header')
+.innerHTML =  checkoutHeaderHTML;
 
 }

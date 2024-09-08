@@ -1,6 +1,7 @@
 import { validDeliveryOption } from "./deliveryOptions.js";
+
 class Cart{
-  #cartItems;
+  cartItems;
   #localStorageKey;
 
   constructor(localStorageKey){
@@ -9,10 +10,10 @@ class Cart{
   }
 
   #loadFromStorage(){
-    this.#cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey));
+    this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey));
   
-    if (!this.#cartItems){
-      this.#cartItems = [{
+    if (!this.cartItems){
+      this.cartItems = [{
         productId:
         'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
         quantity: 2,
@@ -27,13 +28,13 @@ class Cart{
   }
 
   saveToStorage(){
-    localStorage.setItem(this.#localStorageKey, JSON.stringify(this.#cartItems));
+    localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));
   }
 
   addToCart(productId){
     let matchingItem;
   
-    this.#cartItems.forEach((cartItem) => {
+    this.cartItems.forEach((cartItem) => {
       if(productId === cartItem.productId){
         matchingItem = cartItem;
       }
@@ -44,7 +45,7 @@ class Cart{
       matchingItem.quantity += 1;
   
     } else {
-      this.#cartItems.push({
+      this.cartItems.push({
         productId: productId,
         quantity: 1,
         deliveryOptionId: '1'
@@ -58,33 +59,33 @@ class Cart{
   removeFromCart(productId){
     const newCart = [];
   
-    this.#cartItems.forEach((cartItem) =>{
+    this.cartItems.forEach((cartItem) =>{
       if(cartItem.productId !== productId){
         newCart.push(cartItem);
       }
     });
   
-    this.#cartItems = newCart;
+    this.cartItems = newCart;
     this.saveToStorage();
   }
   
     calculateCartQuantity(){
     let cartQuantity = 0;
     
-    this.#cartItems.forEach((cartItem) => {
+    this.cartItems.forEach((cartItem) => {
       cartQuantity += cartItem.quantity;
     });
-    
-    this.saveToStorage();
   
     return cartQuantity;
+
+    this.saveToStorage();
   }
 
   
   updateQuantity(productId, newQuantity){
     let matchingItem;
   
-    this.#cartItems.forEach((cartItem) => {
+    this.cartItems.forEach((cartItem) => {
        if(productId === cartItem.productId){
          matchingItem = cartItem;
        }
@@ -95,7 +96,7 @@ class Cart{
     updateDeliveryOption(productId, deliveryOptionId){
     let matchingItem;
   
-    this.#cartItems.forEach((cartItem) => {
+    this.cartItems.forEach((cartItem) => {
        if(productId === cartItem.productId){
          matchingItem = cartItem;
        }
@@ -120,15 +121,5 @@ class Cart{
 
 
 
-const cart = new Cart('cart-oop');
+export const cart = new Cart('cart-oop');
 const businessCart = new Cart('cart-business');
-
-
-
-console.log(cart);
-console.log(businessCart);
-
-console.log (businessCart instanceof Cart); 
-
-
-  

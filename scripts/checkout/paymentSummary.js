@@ -27,7 +27,6 @@ export function renderPaymentSummary() {
     });
 
     
-
     const paymentSummaryHTML = `
       <div class="payment-summary-title">
         Order Summary
